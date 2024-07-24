@@ -248,40 +248,70 @@
 
 
 
-import { useEffect, useState } from "react";
+// import { useEffect, useState,useMemo } from "react";
 
 
-//useMemo
-function App() {
-  const [counter, setCounter] = useState(0);
-  const [inputValue, setInputValue] = useState(1);
-  const [finalvalue, setFinalValue] = useState(0);
+// //useMemo
+// function App() {
+//   const [counter, setCounter] = useState(0);
+//   const [inputValue, setInputValue] = useState(1);
+//   const [finalvalue, setFinalValue] = useState(0);
 
-  useEffect(() => {
-    let count = 0;
-    for(let i=1;i<=inputValue;i++){
-      count = count + i;
-    }
-    setFinalValue(count);
-  },[inputValue])
+//   let count = useMemo(() => {
+//     let count = 0;
+//     for(let i=1;i<=inputValue;i++){
+//       count = count + i;
+//     }
+//     setFinalValue(count);
+//   },[inputValue])
 
   
 
-  return <div>
-    <input onChange={function(e) {
-      setInputValue(e.target.value);
-    }} placeholder={"Find sum from 1 to n"}></input>
+//   return <div>
+//     <input onChange={function(e) {
+//       setInputValue(e.target.value);
+//     }} placeholder={"Find sum from 1 to n"}></input>
 
     
-    <br />
-    Sum from 1 to {inputValue} is {count}
-    <br />
+//     <br />
+//     Sum from 1 to {inputValue} is {count}
+//     <br />
 
 
+//     <button onClick={() => {
+//       setCounter(counter + 1);
+//     }}>Counter ({counter})</button>
+//   </div>
+// }
+
+// export default App;
+
+
+//useCallback
+
+import { memo, useCallback, useState } from "react";
+
+function App() {
+  const [count, setCount] = useState(0)
+
+  const onClick = useCallback(() => {
+    console.log("child clicked")
+  }, [])
+
+  return <div>
+    <Child onClick={onClick} />
     <button onClick={() => {
-      setCounter(counter + 1);
-    }}>Counter ({counter})</button>
+      setCount(count + 1);
+    }}>Click me {count}</button>
   </div>
 }
+
+const Child = memo(({onClick}) => {
+  console.log("child render")
+
+  return <div>
+    <button onClick={onClick}>Button clicked</button>
+  </div>
+})
 
 export default App;
