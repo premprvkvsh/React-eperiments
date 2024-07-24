@@ -289,29 +289,63 @@
 
 //useCallback
 
-import { memo, useCallback, useState } from "react";
+// import { memo, useCallback, useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+// function App() {
+//   const [count, setCount] = useState(0)
 
-  const onClick = useCallback(() => {
-    console.log("child clicked")
-  }, [])
+//   const onClick = useCallback(() => {
+//     console.log("child clicked")
+//   }, [])
 
-  return <div>
-    <Child onClick={onClick} />
-    <button onClick={() => {
-      setCount(count + 1);
-    }}>Click me {count}</button>
-  </div>
+//   return <div>
+//     <Child onClick={onClick} />
+//     <button onClick={() => {
+//       setCount(count + 1);
+//     }}>Click me {count}</button>
+//   </div>
+// }
+
+// const Child = memo(({onClick}) => {
+//   console.log("child render")
+
+//   return <div>
+//     <button onClick={onClick}>Button clicked</button>
+//   </div>
+// })
+
+// export default App;
+
+//custom hook
+
+
+import { useEffect } from "react";
+import axios from "axios";
+
+function useTodos() {
+ 
+  const [todos, setTodos] = useState({});
+
+  useEffect(() => {
+    axios.get("")
+      .then((res) => {
+       
+        setTodos(res.data.todos)
+      })
+
+    },[])
+  return todos;
+  
 }
 
-const Child = memo(({onClick}) => {
-  console.log("child render")
+
+
+function App(){
+  const todos = useTodos();
 
   return <div>
-    <button onClick={onClick}>Button clicked</button>
+    {todos}
   </div>
-})
+}
 
 export default App;
