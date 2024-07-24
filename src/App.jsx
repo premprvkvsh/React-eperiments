@@ -164,32 +164,78 @@
 
 // export default App;
 
-import { useState } from "react";
+// import { useState } from "react";
+// import { useEffect } from "react";
+
+// function App() {
+//   const [todos, setTodos] = useState([])
+
+//   useEffect(() => {
+//     fetch("https://sum-server.100xdevs.com/todos")
+//       .then(async function(res) {
+//         const json = await res.json();
+//         setTodos(json.todos);
+//       })
+//   }, [])
+
+//   return <div>
+//     {todos.map(todo => <Todo key={todo.id} title={todo.title} description={todo.description} />)}
+//   </div>
+// }
+
+// function Todo({title, description}) {
+//   return <div>
+//     <h1>
+//       {title}
+//     </h1>
+//     <h4>
+//       {description}
+//     </h4>
+//   </div>
+// }
+
+// export default App;
+
+import {useState } from "react";
 import { useEffect } from "react";
+import axios from "axios";
 
 function App() {
-  const [todos, setTodos] = useState([])
+ 
+  const [selectedId, setSelectedId] = useState(1);
+ return <div>
+  <button onClick={function(){
+    setSelectedId(1);
+  }}>1</button>
+  <button onClick={function(){
+    setSelectedId(2);
+  }}>2</button>
+  <button onClick={function(){
+    setSelectedId(3);
+  }}>3</button>
+  
+  <Todo id={selectedId} />
 
-  useEffect(() => {
-    fetch("https://sum-server.100xdevs.com/todos")
-      .then(async function(res) {
-        const json = await res.json();
-        setTodos(json.todos);
-      })
-  }, [])
-
-  return <div>
-    {todos.map(todo => <Todo key={todo.id} title={todo.title} description={todo.description} />)}
-  </div>
+ </div>
+  
+  
 }
+function Todo({id}){
+  const [todo, setTodo] = useState({});
+  
+  useEffect(() => {
+    axios.get('https://sum-server.100xdevs.com/todo?id=${id}')
+      .then(response => {
+        setTodo(response.data.todo);
+      })
+  }, [id]);
 
-function Todo({title, description}) {
   return <div>
     <h1>
-      {title}
+      {todo.title} 
     </h1>
     <h4>
-      {description}
+      {todo.description}
     </h4>
   </div>
 }
