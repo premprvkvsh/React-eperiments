@@ -319,33 +319,59 @@
 //custom hook
 
 
-import { useEffect } from "react";
-import axios from "axios";
+// import { useEffect } from "react";
+// import axios from "axios";
 
-function useTodos() {
+// function useTodos() {
  
-  const [todos, setTodos] = useState({});
+//   const [todos, setTodos] = useState({});
+
+//   useEffect(() => {
+//     axios.get("")
+//       .then((res) => {
+       
+//         setTodos(res.data.todos)
+//       })
+
+//     },[])
+//   return todos;
+  
+// }
+
+
+
+// function App(){
+//   const todos = useTodos();
+
+//   return <div>
+//     {todos}
+//   </div>
+// }
+
+// export default App;
+
+//useRef
+
+import { useCallback, useEffect, useRef, useState } from 'react'
+
+function App() {
+  const  [incomeTax, setIncometax] = useState(20000);
+  const divRef = useRef();
 
   useEffect(() => {
-    axios.get("")
-      .then((res) => {
-       
-        setTodos(res.data.todos)
-      })
+    setTimeout(() => {
+      console.log(divRef.current);
+      divRef.current.innerHTML = 10
+    }, 5000);
+  }, [])
 
-    },[])
-  return todos;
   
+
+  return (
+    <div>
+        hi there, your income tax returns are <div ref={divRef}>{incomeTax}</div>
+    </div>
+  )
 }
 
-
-
-function App(){
-  const todos = useTodos();
-
-  return <div>
-    {todos}
-  </div>
-}
-
-export default App;
+export default App
