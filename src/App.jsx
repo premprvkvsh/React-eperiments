@@ -207,9 +207,11 @@ function App() {
   <button onClick={function(){
     setSelectedId(1);
   }}>1</button>
+
   <button onClick={function(){
     setSelectedId(2);
   }}>2</button>
+
   <button onClick={function(){
     setSelectedId(3);
   }}>3</button>
@@ -217,14 +219,15 @@ function App() {
   <Todo id={selectedId} />
 
  </div>
-  
-  
+ 
 }
+
+
 function Todo({id}){
   const [todo, setTodo] = useState({});
   
   useEffect(() => {
-    axios.get('https://sum-server.100xdevs.com/todo?id=${id}')
+    axios.get(`https://sum-server.100xdevs.com/todo?id=${id}`)
       .then(response => {
         setTodo(response.data.todo);
       })
